@@ -1,5 +1,6 @@
 body {
     margin: 0px;
+    padding-bottom: 20px;
 }
 
 .header {
@@ -7,7 +8,6 @@ body {
     background-position: center;
     background-size: cover;
     color: white;
-
     padding: 50px 0px 50px 25px;
 }
 
@@ -15,6 +15,10 @@ body {
     margin: 0;
     font-weight: 400;
     font-size: 30px;
+}
+
+.header-2 {
+    text-align: center;
 }
 
 .paragraph-1 {
@@ -43,15 +47,21 @@ body {
 
 }
 
+.emoji-details-container {
+    display: flex;
+    align-items: center; 
+}
+
 .menu-name {
     margin: 2px 0px 2px 0px;
     font-size: 20px;
     line-height: 16.8px;
+    font-weight: 600;
 }
 
 .menu-price {
     margin: 2px 0px 2px 0px;
-    font-weight: 400;
+    font-weight: 600;
     font-size: 1rem;
 }
 
@@ -75,4 +85,59 @@ body {
     border: 1px solid rgb(196, 190, 190);
     background-color: white;
     padding: 4px 8px 4px 8px;
+}
+
+li {
+    list-style-type: none;
+}
+
+.ul-list{
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    padding-left: 23px;
+    
+}
+
+.left-item{
+    font-size: 20px;
+    font-weight: 600;
+}
+
+
+.item-price {
+    margin-right:30px;
+    font-weight: 600;
+}
+
+.total {
+    font-size: 20px;
+    font-weight: 900;
+}
+
+.total-price-flex {
+    display: flex;
+    justify-content: space-between;
+    border-top: 1px solid black;
+    margin: 0px 30px 0px 23px;
+}
+
+.remove {
+    background-color: white;
+    border:none;
+    color: #8b8b8b5b;
+}
+
+.complete-order-btn {
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    padding: 20px 0px;
+    width: 92%;
+    border: none;
+    background-color: #16DB99;
+    color:white;
+    font-size: 15px;
+    font-weight: bolder;
+    border-radius: 3px;
 }
