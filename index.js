@@ -1,7 +1,9 @@
 import { menuArray } from "./data.js";
 const mainContainer = document.getElementById('main');
 const orderContainer = document.getElementById('order-section');
-const orderItem = [];
+const formContainer = document.getElementById('form');
+const thankYouMessage = document.getElementById('thank-you');
+let orderItem = [];
 
 
 function generatedHtml() {
@@ -19,8 +21,8 @@ function generatedHtml() {
                         <p class='menu-price'>$${menuItm.price}</p>
                     </div>
                 </div>
-                <div class="plus-btn-container">
-                    <button class="plus-btn" data-id='${menuItm.id}'>+</button>
+                <div class='plus-btn-container'>
+                    <button class='plus-btn' data-id='${menuItm.id}'>+</button>
                 </div>
             </div>`
            
@@ -35,6 +37,21 @@ document.addEventListener('click', function(e) {
     if(e.target.dataset.id) {
         const clickedId = Number(e.target.dataset.id)
         addToOrder(clickedId)
+    }
+
+    if(e.target.dataset.remove) {
+        const removeId = Number(e.target.dataset.remove)
+        removeFromOrder(removeId)
+    }
+
+    if(e.target.dataset.complete) {
+        e.preventDefault()
+        renderForm(e.target.dataset.complete)
+    }
+
+    if(e.target.dataset.pay) {
+        e.preventDefault()
+        renderThankYouMessage(e.target.dataset.complete)
     }
 })
 
@@ -54,13 +71,13 @@ function renderOrder() {
             total += item.price
         
                return  `
-                    <ul class="ul-list">
+                    <ul class='ul-list'>
                        
-                            <li class="left-item">
+                            <li class='left-item'>
                                 ${item.name}
-                                <button class="remove">remove</button>
+                                <button class='remove-btn' data-remove=${item.id}>remove</button>
                             </li>
-                        <li class="item-price" >
+                        <li class='item-price' >
                             $${item.price}
                         </li>
                     </ul>
@@ -71,13 +88,53 @@ function renderOrder() {
     console.log(orderDataHtml)
         orderContainer.innerHTML = 
             `
-            <h2 class="header-2">Your Order</h2>
+            <h2 class='header-2'>Your Order</h2>
             ${orderDataHtml}
-            <div class="total-price-flex">
-                <p class="total">Total price:</p>
+            <div class='total-price-flex'>
+                <p class='total'>Total price:</p>
                 <p>$${total}</p>
             </div>
-            <button class="complete-order-btn" id="complete-order-btn">Complete Order</button>
+            <button class='complete-order-btn' data-complete='complete-order-btn'>Complete Order</button>
             
             `
 }
+
+function removeFromOrder(id) {
+    let removed = false
+      orderItem = orderItem.filter(item => {
+        if(item.id === id && !removed) {
+            removed = true
+            return false
+        } else {
+            return true
+        }
+    });
+   
+    renderOrder()
+}
+
+function renderForm() {
+    formContainer.style.display='block'
+    formContainer.innerHTML = 
+        `
+            <h2 class='card-details'>Enter Card Details</h2>
+            <label for='name'></label>
+            <input class="name" id='name'type='text' placeholder='Enter name' required></input>
+            <label for='card-number'></label>
+            <input class="card-number" id='card-number' type='text' placeholder='Enter Card number' required></input>
+            <label for='password'></label>
+            <input class='cvv' id='password' type='password' placeholder='Enter CVV' required></input>
+            <button class='pay-btn' data-pay='pay-btn' >Pay</button>
+        `
+}
+
+function renderThankYouMessage() {
+    orderContainer.style.display='none'
+    formContainer.style.display='none'
+
+    thankYouMessage.innerHTML = 
+        `
+        <p class='thank-you'>Thanks,James!Your order is on the way!</p>
+        `
+}
+
