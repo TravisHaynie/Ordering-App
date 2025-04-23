@@ -14,7 +14,6 @@ function generatedHtml() {
     menuArray.forEach((menuItm) => {
         menuHtml +=
             `
-            <p class='discount-message'>Spend more than $30 you get a 5% discount on your total order.</p>
             <div class='main-container border-btm'>
                 <div>
                     <p class='menu-emoji'>${menuItm.emoji}</p> 
@@ -27,11 +26,16 @@ function generatedHtml() {
                 <div class='plus-btn-container'>
                     <button class='plus-btn' data-id='${menuItm.id}'>+</button>
                 </div>
-            </div>`
+            </div>
+            `;
            
-    })
-       mainContainer.innerHTML = menuHtml;
-}
+    });
+       mainContainer.innerHTML = 
+            `
+            <p class='discount-message'>Spend more than $30 you get a 5% discount on your total order.</p> 
+            ${menuHtml}
+            `;
+};
 
 generatedHtml();
 
@@ -73,22 +77,22 @@ function addToOrder(id) {
 function renderOrder() {
     let total = 0;
 
-        const orderDataHtml = orderItem.map(item => {
+    const orderDataHtml = orderItem.map(item => {
 
-         total += item.price
+        total += item.price
 
-               return  `
-                    <ul class='ul-list'>
-                            <li class='left-item'>
-                                ${item.name}
-                                <button class='remove-btn' data-remove=${item.id}>remove</button>
-                            </li>
-                        <li class='item-price'>
-                            $${item.price}
-                        </li>
-                    </ul>
-                `
-        }).join(' ')
+            return  `
+                <ul class='ul-list'>
+                    <li class='left-item'>
+                        ${item.name}
+                        <button class='remove-btn' data-remove=${item.id}>remove</button>
+                    </li>
+                    <li class='item-price'>
+                        $${item.price}
+                    </li>
+                </ul>
+                `;
+        }).join(' ');
 
         const originalTotal = total;
 
@@ -109,11 +113,10 @@ function renderOrder() {
                 </div>
             </div>
             <button class='complete-order-btn' data-complete='complete-order-btn'>Complete Order</button>
-            
-            `
+            `;
             
     if(total < originalTotal) {
-         document.getElementById('final-total').style.display = 'block'
+        document.getElementById('final-total').style.display = 'block'
     }
 };
 
@@ -145,7 +148,7 @@ function renderForm() {
             <label for='password'></label>
             <input class='cvv' id='password' type='password' placeholder='Enter CVV' required></input>
             <button class='pay-btn' data-pay='pay-btn' >Pay</button>
-        `
+        `;
 };
 
 function renderThankYouMessage() {
@@ -154,19 +157,19 @@ function renderThankYouMessage() {
 
     thankYouMessage.innerHTML = 
         `
-        <p class='thank-you'>Thanks, James!Your order is on the way!</p>
-        `
+            <p class='thank-you'>Thanks, James!Your order is on the way!</p>
+        `;
 
     ratingStar.innerHTML = 
         `
-        <p class='star-emoji' data-star='start-emoji'>✩✩✩✩✩</p>
-        `
+             <p class='star-emoji' data-star='start-emoji'>✩✩✩✩✩</p>
+        `;
 };
 
 function renderRatings() {
     ratingStar.innerHTML = 
-    `
-    <p class='star-emoji' data-star='start-emoji'>★★★★★</p>
-    `
+        `
+            <p class='star-emoji' data-star='start-emoji'>★★★★★</p>
+        `;
 };
 

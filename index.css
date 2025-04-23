@@ -214,4 +214,5 @@ li {
 
 .star-emoji {
     cursor: pointer;
+    text-align: center;
 }
