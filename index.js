@@ -3,6 +3,7 @@ const mainContainer = document.getElementById('main');
 const orderContainer = document.getElementById('order-section');
 const formContainer = document.getElementById('form');
 const thankYouMessage = document.getElementById('thank-you');
+const ratingStar = document.getElementById('ratings');
 let orderItem = [];
 
 
@@ -12,6 +13,7 @@ function generatedHtml() {
         console.log(menuItm.ingredients)
         menuHtml +=
             `
+            <p class='discount-message'>If you spend more than $30 you get a 5% discount on your total order.</p>
             <div class='main-container border-btm'>
                 <div>
                     <p class='menu-emoji'>${menuItm.emoji}</p> 
@@ -53,6 +55,10 @@ document.addEventListener('click', function(e) {
         e.preventDefault()
         renderThankYouMessage(e.target.dataset.complete)
     }
+
+    if(e.target.dataset.star) {
+        renderRatings(e.target.dataset.star)
+    }
 })
 
 function addToOrder(id) {
@@ -68,7 +74,9 @@ function renderOrder() {
     let total = 0
    
         const orderDataHtml = orderItem.map(item => {
-            total += item.price
+
+         total += item.price
+           
         
                return  `
                     <ul class='ul-list'>
@@ -83,8 +91,13 @@ function renderOrder() {
                     </ul>
                 `
         }).join(' ')
+        
+        const origionalTotal = total
 
-       
+        if(total > 30) {
+           total =  Math.floor(total  * .95)
+        } 
+
     console.log(orderDataHtml)
         orderContainer.innerHTML = 
             `
@@ -92,11 +105,18 @@ function renderOrder() {
             ${orderDataHtml}
             <div class='total-price-flex'>
                 <p class='total'>Total price:</p>
-                <p>$${total}</p>
+                <div class='discount-total'>
+                    <p>Original total: $${origionalTotal}</p>
+                    <p id='final-total' style='display:none;'>Final total:${'     '} $${total}</p>
+                </div>
             </div>
             <button class='complete-order-btn' data-complete='complete-order-btn'>Complete Order</button>
             
             `
+            
+    if(total < origionalTotal) {
+         document.getElementById('final-total').style.display = 'block'
+    }
 }
 
 function removeFromOrder(id) {
@@ -136,5 +156,17 @@ function renderThankYouMessage() {
         `
         <p class='thank-you'>Thanks,James!Your order is on the way!</p>
         `
+
+    ratingStar.innerHTML = 
+        `
+        <p class='star-emoji' data-star='start-emoji'>✩✩✩✩✩</p>
+        `
+}
+
+function renderRatings() {
+    ratingStar.innerHTML = 
+    `
+    <p class='star-emoji' data-star='start-emoji'>★★★★★</p>
+    `
 }
 
